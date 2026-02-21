@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link } from "lucide-react";
-import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -68,12 +69,50 @@ export default function Navbar() {
                     Book Appointment
                 </a>
 
-                <button className="md:hidden p-2 text-primary-dark">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                <button
+                    className="md:hidden p-2 text-primary-dark"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                    {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                 </button>
             </div>
+
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="absolute top-full left-0 right-0 bg-white border-t border-gray-100 shadow-lg md:hidden overflow-hidden"
+                    >
+                        <nav className="flex flex-col p-4 bg-white shadow-xl">
+                            {[
+                                { name: "Home", path: "/" },
+                                { name: "About Us", path: "/about" },
+                                { name: "Services", path: "/services" },
+                                { name: "Gallery", path: "/gallery" },
+                                { name: "Contact", path: "/contact" }
+                            ].map((item) => (
+                                <a
+                                    key={item.name}
+                                    href={item.path}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="py-3 px-2 text-lg font-medium text-gray-800 hover:text-primary transition-colors border-b border-gray-50 last:border-0"
+                                >
+                                    {item.name}
+                                </a>
+                            ))}
+                            <a
+                                href="/booking"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="mt-4 flex items-center justify-center px-6 py-3.5 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-primary-dark transition-colors shadow-md w-full"
+                            >
+                                Book Appointment
+                            </a>
+                        </nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.header>
     );
 }
