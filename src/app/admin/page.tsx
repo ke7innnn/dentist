@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Clock, Plus, Phone, AlertCircle, CheckCircle2, CalendarDays, Users, LayoutDashboard, Settings, LogOut, Search, Bell, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Plus, Phone, AlertCircle, CheckCircle2, CalendarDays, Users, LayoutDashboard, Settings, LogOut, Search, Bell, X, Menu } from "lucide-react";
 
 // --- MOCK DATA ---
 const operatingHours = [
@@ -61,6 +61,7 @@ export default function AdminDashboardPage() {
     const [selectedDate, setSelectedDate] = useState(new Date("2023-10-25"));
     const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
     const [isNewBookingModalOpen, setIsNewBookingModalOpen] = useState(false);
     const [newBookingForm, setNewBookingForm] = useState({ name: "", phone: "", time: "9:30 AM", duration: 1, treatment: "" });
@@ -152,7 +153,7 @@ export default function AdminDashboardPage() {
         return (
             <div className="max-w-7xl mx-auto space-y-6">
                 {/* Header & Controls */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-900">Appointments Schedule</h1>
                         <p className="text-gray-500 mt-1">Manage today's bookings and patient flow.</p>
@@ -261,7 +262,7 @@ export default function AdminDashboardPage() {
                     /* LIST VIEW */
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
+                            <table className="w-full text-left border-collapse min-w-[800px]">
                                 <thead>
                                     <tr className="bg-gray-50 border-b border-gray-100">
                                         <th className="py-4 px-6 font-semibold text-gray-500 text-sm">Time</th>
@@ -347,11 +348,16 @@ export default function AdminDashboardPage() {
                 </div>
             </aside>
 
-            {/* Main Content Area */}
-            <main className="flex-1 flex flex-col h-screen overflow-hidden">
+            {/* Mobile Bottom Navigation Layout */}
+            <main className="flex-1 flex flex-col h-screen overflow-hidden pb-16 md:pb-0">
 
                 {/* Top Header */}
-                <header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 flex-shrink-0">
+                <header className="h-16 md:h-20 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 flex-shrink-0">
+                    <div className="flex items-center gap-2 md:hidden">
+                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">S</div>
+                        <span className="font-bold text-lg text-primary-dark">Admin</span>
+                    </div>
+
                     <div className="relative w-96 hidden lg:block">
                         <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
@@ -361,13 +367,13 @@ export default function AdminDashboardPage() {
                         />
                     </div>
 
-                    <div className="flex items-center gap-6 ml-auto">
+                    <div className="flex items-center gap-4 md:gap-6 ml-auto">
                         <button className="relative p-2 text-gray-400 hover:text-primary transition-colors">
-                            <Bell className="w-6 h-6" />
-                            <span className="absolute top-1 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                            <Bell className="w-5 h-5 md:w-6 md:h-6" />
+                            <span className="absolute top-1 right-2 w-2 h-2 md:w-2.5 md:h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
                         </button>
-                        <div className="flex items-center gap-3 border-l border-gray-200 pl-6">
-                            <div className="w-10 h-10 rounded-full bg-primary-light/30 flex items-center justify-center text-primary-dark font-bold">
+                        <div className="flex items-center gap-3 md:border-l md:border-gray-200 md:pl-6">
+                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary-light/30 flex items-center justify-center text-primary-dark font-bold text-xs md:text-sm">
                                 JS
                             </div>
                             <div className="hidden sm:block">
@@ -384,6 +390,52 @@ export default function AdminDashboardPage() {
                 </div>
 
             </main>
+
+            {/* Mobile Bottom Navigation Bar */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 z-50 px-2 pb-safe">
+                <button onClick={() => setActiveTab("dashboard")} className={`flex flex-col items-center justify-center w-16 gap-1 ${activeTab === 'dashboard' ? 'text-primary' : 'text-gray-400'}`}>
+                    <LayoutDashboard className="w-6 h-6" />
+                    <span className="text-[10px] font-medium">Dash</span>
+                </button>
+                <button onClick={() => setActiveTab("appointments")} className={`flex flex-col items-center justify-center w-16 gap-1 ${activeTab === 'appointments' ? 'text-primary' : 'text-gray-400'}`}>
+                    <CalendarDays className="w-6 h-6" />
+                    <span className="text-[10px] font-medium">Appts</span>
+                </button>
+                <button onClick={() => setIsNewBookingModalOpen(true)} className="flex flex-col items-center justify-center -mt-6">
+                    <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg border-4 border-gray-50">
+                        <Plus className="w-6 h-6" />
+                    </div>
+                </button>
+                <button onClick={() => setActiveTab("patients")} className={`flex flex-col items-center justify-center w-16 gap-1 ${activeTab === 'patients' ? 'text-primary' : 'text-gray-400'}`}>
+                    <Users className="w-6 h-6" />
+                    <span className="text-[10px] font-medium">Patients</span>
+                </button>
+                <button onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} className={`flex flex-col items-center justify-center w-16 gap-1 ${isMobileNavOpen || activeTab === 'settings' ? 'text-primary' : 'text-gray-400'}`}>
+                    <Menu className="w-6 h-6" />
+                    <span className="text-[10px] font-medium">Menu</span>
+                </button>
+            </nav>
+
+            {/* Mobile Expanded Menu overlay */}
+            <AnimatePresence>
+                {isMobileNavOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 100 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 100 }}
+                        className="md:hidden fixed inset-x-0 bottom-16 bg-white border-t border-gray-200 shadow-xl z-40 p-4 rounded-t-2xl"
+                    >
+                        <div className="space-y-2">
+                            <button onClick={() => { setActiveTab("settings"); setIsMobileNavOpen(false); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'settings' ? 'bg-primary/10 text-primary' : 'text-gray-600'}`}>
+                                <Settings className="w-5 h-5" /> Settings
+                            </button>
+                            <a href="/" className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-xl font-medium transition-colors">
+                                <LogOut className="w-5 h-5" /> Sign Out to Main Site
+                            </a>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Appointment Detail Modal */}
             <AnimatePresence>

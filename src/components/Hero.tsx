@@ -57,13 +57,13 @@ export default function Hero() {
                     className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
                     <a
-                        href="https://drsiddheshsardesai.in/about-us.php"
+                        href="/booking"
                         className="px-8 py-4 bg-primary text-white rounded-full font-medium hover:bg-primary-light transition-all shadow-lg hover:shadow-primary/30 w-full sm:w-auto text-lg"
                     >
                         Book Appointment
                     </a>
                     <a
-                        href="https://drsiddheshsardesai.in/dental-checkup-and-digital-x-rays.php"
+                        href="/services"
                         className="px-8 py-4 bg-white/10 backdrop-blur-md text-white border border-white/30 rounded-full font-medium hover:bg-white hover:text-primary-dark transition-all w-full sm:w-auto text-lg"
                     >
                         Our Services
