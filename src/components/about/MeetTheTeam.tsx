@@ -8,19 +8,7 @@ const team = [
         name: "Dr. Siddhesh Sardesai",
         role: "Lead Cosmetic Dentist & Implantologist",
         bio: "With over 15 years of experience, Dr. Sardesai specializes in advanced cosmetic dentistry and full-mouth rehabilitation. He believes in a gentle approach to create life-changing smiles.",
-        image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "Dr. Ananya Sharma",
-        role: "Orthodontist",
-        bio: "Dr. Sharma is an expert in modern clear aligner therapy and traditional braces. She is passionate about correcting bites and aligning teeth for both children and adults.",
-        image: "https://images.unsplash.com/photo-1594824436998-dd1cdfa4138a?q=80&w=800&auto=format&fit=crop"
-    },
-    {
-        name: "Dr. Rahul Patel",
-        role: "Pediatric Dentist",
-        bio: "Known for his patience and high-energy, Dr. Patel ensures our youngest patients have a fun, fear-free experience while building a foundation for lifelong oral health.",
-        image: "https://images.unsplash.com/photo-1537368910025-7028b9098fb5?q=80&w=800&auto=format&fit=crop"
+        image: ""
     }
 ];
 
@@ -59,7 +47,7 @@ export default function MeetTheTeam() {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="flex justify-center">
                     {team.map((member, index) => (
                         <motion.div
                             key={index}
@@ -72,8 +60,8 @@ export default function MeetTheTeam() {
                             <div className="relative overflow-hidden rounded-3xl mb-6 bg-white shadow-xl aspect-[4/5] cursor-pointer">
                                 {/* Image */}
                                 <div
-                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                    style={{ backgroundImage: `url('${member.image}')` }}
+                                    className={`absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 ${member.image ? '' : 'bg-gray-200'}`}
+                                    style={member.image ? { backgroundImage: `url('${member.image}')` } : {}}
                                 />
 
                                 {/* Hover Overlay */}
