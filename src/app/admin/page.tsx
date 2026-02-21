@@ -62,6 +62,7 @@ export default function AdminDashboardPage() {
     const [viewMode, setViewMode] = useState<"calendar" | "list">("calendar");
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const [isNewBookingModalOpen, setIsNewBookingModalOpen] = useState(false);
     const [newBookingForm, setNewBookingForm] = useState({ name: "", phone: "", time: "9:30 AM", duration: 1, treatment: "" });
@@ -99,6 +100,75 @@ export default function AdminDashboardPage() {
 
     // Content for each tab
     const renderContent = () => {
+        // Intercept with Search Results if a query exists
+        if (searchQuery.trim() !== "") {
+            const allAppointments = Object.values(appointments).flat();
+            const searchResults = allAppointments.filter(appt =>
+                appt.patientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                appt.phone.includes(searchQuery) ||
+                appt.treatment.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            return (
+                <div className="max-w-7xl mx-auto space-y-6">
+                    <h1 className="text-2xl font-bold text-gray-900">Search Results for "{searchQuery}"</h1>
+                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse min-w-[800px]">
+                                <thead>
+                                    <tr className="bg-gray-50 border-b border-gray-100">
+                                        <th className="py-4 px-6 font-semibold text-gray-500 text-sm">Date & Time</th>
+                                        <th className="py-4 px-6 font-semibold text-gray-500 text-sm">Patient Name</th>
+                                        <th className="py-4 px-6 font-semibold text-gray-500 text-sm">Contact</th>
+                                        <th className="py-4 px-6 font-semibold text-gray-500 text-sm">Treatment</th>
+                                        <th className="py-4 px-6 font-semibold text-gray-500 text-sm">Status</th>
+                                        <th className="py-4 px-6 font-semibold text-gray-500 text-sm text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    {searchResults.length > 0 ? searchResults.map(appt => {
+                                        // Find which date this appointment belongs to for display
+                                        const dateKey = Object.keys(appointments).find(key => appointments[key].some(a => a.id === appt.id));
+                                        return (
+                                            <tr key={appt.id} className="hover:bg-gray-50 transition-colors">
+                                                <td className="py-4 px-6 font-medium text-gray-900">
+                                                    <div className="text-sm">{dateKey}</div>
+                                                    <div className="text-sm text-gray-500">{appt.time}</div>
+                                                </td>
+                                                <td className="py-4 px-6">
+                                                    <div className="font-bold text-gray-900">{appt.patientName}</div>
+                                                    {appt.isNewPatient && <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">New Patient</span>}
+                                                </td>
+                                                <td className="py-4 px-6 text-gray-600 text-sm flex items-center gap-2">
+                                                    <Phone className="w-3 h-3" /> {appt.phone}
+                                                </td>
+                                                <td className="py-4 px-6 text-gray-600 text-sm">{appt.treatment}</td>
+                                                <td className="py-4 px-6">
+                                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${getStatusColors(appt.status)}`}>
+                                                        {getStatusIcon(appt.status)}
+                                                        <span className="capitalize">{appt.status}</span>
+                                                    </span>
+                                                </td>
+                                                <td className="py-4 px-6 text-right">
+                                                    <button onClick={() => setSelectedAppointment(appt)} className="text-primary hover:text-primary-dark font-medium text-sm">View</button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    }) : (
+                                        <tr>
+                                            <td colSpan={6} className="py-12 text-center text-gray-500">
+                                                No results found matching your search.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
         if (activeTab === "dashboard") {
             return (
                 <div className="max-w-7xl mx-auto space-y-6">
@@ -352,31 +422,42 @@ export default function AdminDashboardPage() {
             <main className="flex-1 flex flex-col h-screen overflow-hidden pb-16 md:pb-0">
 
                 {/* Top Header */}
-                <header className="h-16 md:h-20 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8 flex-shrink-0">
-                    <div className="flex items-center gap-2 md:hidden">
-                        <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">S</div>
-                        <span className="font-bold text-lg text-primary-dark">Admin</span>
+                <header className="h-auto md:h-20 bg-white border-b border-gray-200 flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py-3 md:py-0 flex-shrink-0 gap-3">
+                    <div className="flex items-center justify-between w-full md:w-auto">
+                        <div className="flex items-center gap-2 md:hidden">
+                            <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">S</div>
+                            <span className="font-bold text-lg text-primary-dark">Admin</span>
+                        </div>
+                        <div className="flex items-center gap-4 md:hidden">
+                            <button className="relative p-2 text-gray-400 hover:text-primary transition-colors">
+                                <Bell className="w-5 h-5 bg-transparent" />
+                                <span className="absolute top-1 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                            </button>
+                            <div className="w-8 h-8 rounded-full bg-primary-light/30 flex items-center justify-center text-primary-dark font-bold text-xs">JS</div>
+                        </div>
                     </div>
 
-                    <div className="relative w-96 hidden lg:block">
+                    <div className="relative w-full md:w-96">
                         <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
                             type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search patients, phone numbers..."
                             className="w-full pl-12 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                         />
                     </div>
 
-                    <div className="flex items-center gap-4 md:gap-6 ml-auto">
+                    <div className="hidden md:flex items-center gap-6 ml-auto">
                         <button className="relative p-2 text-gray-400 hover:text-primary transition-colors">
-                            <Bell className="w-5 h-5 md:w-6 md:h-6" />
-                            <span className="absolute top-1 right-2 w-2 h-2 md:w-2.5 md:h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                            <Bell className="w-6 h-6" />
+                            <span className="absolute top-1 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
                         </button>
-                        <div className="flex items-center gap-3 md:border-l md:border-gray-200 md:pl-6">
-                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary-light/30 flex items-center justify-center text-primary-dark font-bold text-xs md:text-sm">
+                        <div className="flex items-center gap-3 border-l border-gray-200 pl-6">
+                            <div className="w-10 h-10 rounded-full bg-primary-light/30 flex items-center justify-center text-primary-dark font-bold text-sm">
                                 JS
                             </div>
-                            <div className="hidden sm:block">
+                            <div>
                                 <p className="text-sm font-bold text-gray-900">Jane Smith</p>
                                 <p className="text-xs text-gray-500">Receptionist</p>
                             </div>
