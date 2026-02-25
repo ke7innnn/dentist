@@ -25,7 +25,7 @@ export default function About() {
                         </p>
 
                         <p className="text-lg text-gray-600 leading-relaxed">
-                            At Dr. Sardesai's Clinic, we believe every smile tells a story — and we're here to make yours bright, healthy, and confident. Our team of experienced dentists combines advanced technology with a gentle, caring approach to ensure every visit is comfortable and stress-free.
+                            At Demo Dental Clinic, we believe every smile tells a story — and we're here to make yours bright, healthy, and confident. Our team of experienced dentists combines advanced technology with a gentle, caring approach to ensure every visit is comfortable and stress-free.
                         </p>
 
                         <ul className="space-y-4 pt-4">
@@ -56,7 +56,7 @@ export default function About() {
                         <div className="sticky top-32 h-[500px] w-full rounded-2xl overflow-hidden shadow-2xl">
                             <img
                                 src="/clinic_interior.png"
-                                alt="Dr. Sardesai's modern dental clinic interior"
+                                alt="Demo Dental Clinic's modern dental clinic interior"
                                 className="w-full h-full object-cover"
                             />
                         </div>

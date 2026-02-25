@@ -15,7 +15,7 @@ export default function Footer() {
                             />
                             <div className="flex flex-col">
                                 <span className="font-bold text-lg leading-tight text-white">
-                                    Dr. Sardesai's
+                                    Demo
                                 </span>
                                 <span className="text-xs font-semibold uppercase tracking-wider text-primary-light">
                                     Dental Clinic
@@ -77,13 +77,13 @@ export default function Footer() {
                         </div>
                         <div className="flex items-start gap-4 text-gray-400">
                             <Mail className="w-6 h-6 text-primary flex-shrink-0" />
-                            <p><a href="mailto:dr.sardesai0909@gmail.com" className="hover:text-primary-light">dr.sardesai0909@gmail.com</a></p>
+                            <p><a href="mailto:info@demodental.com" className="hover:text-primary-light">info@demodental.com</a></p>
                         </div>
                     </div>
                 </div>
 
                 <div className="pt-8 border-t border-white/10 text-center text-gray-400 text-sm">
-                    <p>© 2025 Dr. Sardesai's Dental Clinic – All Rights Reserved. Design & Development by HubTech Media Solutions</p>
+                    <p>© 2025 Demo Dental Clinic – All Rights Reserved. Design & Development by HubTech Media Solutions</p>
                 </div>
             </div>
         </footer>

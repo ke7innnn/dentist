@@ -276,7 +276,7 @@ export default function AdminDashboardPage() {
                         {/* Grid Header */}
                         <div className="grid grid-cols-12 border-b border-gray-100 bg-gray-50/50">
                             <div className="col-span-2 py-4 text-center font-bold text-gray-500 text-sm border-r border-gray-100">TIME</div>
-                            <div className="col-span-10 py-4 px-6 font-bold text-gray-800">DR. SARDESAI (Chair 1)</div>
+                            <div className="col-span-10 py-4 px-6 font-bold text-gray-800">DR. DEMO (Chair 1)</div>
                         </div>
 
                         {/* Timeline Grid */}

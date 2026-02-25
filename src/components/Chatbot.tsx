@@ -10,7 +10,7 @@ type Message = {
     text: string;
 };
 
-const initialMessage: Message = { id: 1, type: "bot", text: "Hello! Welcome to Dr. Sardesai's Clinic. How can I help you today?" };
+const initialMessage: Message = { id: 1, type: "bot", text: "Hello! Welcome to Demo Dental Clinic. How can I help you today?" };
 
 export default function Chatbot() {
     const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function Chatbot() {
             } else if (lowerText.includes("book") || lowerText.includes("appointment")) {
                 replyText = "You can click on 'Book Appointment' in the navigation bar or use the Booking portal to schedule a visit!";
             } else if (lowerText.includes("implant")) {
-                replyText = "Yes, Dr. Sardesai specializes in advanced implantology and full-mouth rehabilitation. We offer single implants and All-on-4 solutions.";
+                replyText = "Yes, Dr. Demo specializes in advanced implantology and full-mouth rehabilitation. We offer single implants and All-on-4 solutions.";
             } else if (lowerText.includes("pain") || lowerText.includes("hurt")) {
                 replyText = "We deeply value patient comfort! We use advanced soft tissue lasers and precise techniques to ensure virtually pain-free experiences.";
             }

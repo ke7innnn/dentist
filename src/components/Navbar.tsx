@@ -35,7 +35,7 @@ export default function Navbar() {
                     />
                     <div className="flex flex-col">
                         <span className={`font-bold text-lg leading-tight ${isScrolled ? "text-primary-dark" : "text-primary-dark"} `}>
-                            Dr. Sardesai's
+                            Demo
                         </span>
                         <span className={`text-xs font-semibold uppercase tracking-wider ${isScrolled ? "text-primary" : "text-primary"}`}>
                             Dental Clinic

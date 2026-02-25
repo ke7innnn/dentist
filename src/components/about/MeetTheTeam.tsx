@@ -5,9 +5,9 @@ import { Linkedin, Twitter, Mail } from "lucide-react";
 
 const team = [
     {
-        name: "Dr. Siddhesh Sardesai",
+        name: "Dr. Demo",
         role: "Lead Cosmetic Dentist & Implantologist",
-        bio: "With over 15 years of experience, Dr. Sardesai specializes in advanced cosmetic dentistry and full-mouth rehabilitation. He believes in a gentle approach to create life-changing smiles.",
+        bio: "With over 15 years of experience, Dr. Demo specializes in advanced cosmetic dentistry and full-mouth rehabilitation. He believes in a gentle approach to create life-changing smiles.",
         image: ""
     }
 ];

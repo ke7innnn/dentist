@@ -32,7 +32,7 @@ export default function WhyChooseUs() {
                         className="text-white space-y-8"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-primary-light font-medium text-sm tracking-wide">
-                            <ShieldPlus className="w-4 h-4" /> Why Choose Dr. Sardesai's
+                            <ShieldPlus className="w-4 h-4" /> Why Choose Demo Dental
                         </div>
 
                         <h2 className="text-4xl md:text-6xl font-bold leading-tight">

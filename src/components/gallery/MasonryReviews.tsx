@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const reviews = [
     {
         name: "Sarah Jenkins",
-        text: "Absolutely the best dental experience I've ever had. I was terrified of dentists for years, but Dr. Sardesai changed everything. The clinic is beautiful and calming!",
+        text: "Absolutely the best dental experience I've ever had. I was terrified of dentists for years, but Dr. Demo changed everything. The clinic is beautiful and calming!",
         rating: 5,
         tag: "Cosmetic Dentistry"
     },

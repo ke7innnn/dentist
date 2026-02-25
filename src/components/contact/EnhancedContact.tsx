@@ -108,7 +108,7 @@ export default function EnhancedContact() {
                                     </div>
                                     <div>
                                         <h4 className="font-bold text-lg mb-1">Email Address</h4>
-                                        <a href="mailto:dr.sardesai0909@gmail.com" className="text-gray-300 hover:text-white transition-colors">dr.sardesai0909@gmail.com</a>
+                                        <a href="mailto:info@demodental.com" className="text-gray-300 hover:text-white transition-colors">info@demodental.com</a>
                                     </div>
                                 </div>
 

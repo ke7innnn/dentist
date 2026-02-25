@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dr. Sardesai's Dental Clinic",
+  title: "Demo Dental Clinic",
   description: "Expert Care for Confident Smiles. Your Partner in Lasting Oral Health.",
 };
 
